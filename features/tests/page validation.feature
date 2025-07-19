@@ -6,5 +6,5 @@ Feature: Settings and page validation
     When User logs in with valid credentials
     And User navigates to the settings page
     Then Settings page should be displayed
-    And Settings page should have 13 options
+    And Settings page should have 18 options
     And the "Connect the Company" button should be visible

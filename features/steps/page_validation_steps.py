@@ -25,7 +25,7 @@ def step_navigate_to_settings(context):
 def step_verify_settings_page(context):
     assert context.settings_page.is_settings_page_open(), "Settings page is not open"
 
-@then('settings page should have 13 options')
+@then('settings page should have 18 options')
 def step_verify_option_count(context):
     count = context.settings_page.count_settings_items()
     assert count == 18, f"Expected 18 options, but found {count}"
