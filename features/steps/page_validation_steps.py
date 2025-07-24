@@ -14,7 +14,7 @@ def step_open_main_page(context):
 
 @when('user logs in with valid credentials')
 def step_login(context):
-    context.login_page.login("your_email@example.com", "your_password")
+    context.login_page.login()
 
 @when('user navigates to the settings page')
 def step_navigate_to_settings(context):

@@ -11,12 +11,10 @@ class SettingsPage(Page):
     SETTINGS_ITEMS = (By.CSS_SELECTOR, "[class*= 'page-setting-block w-inline-block']")
     CONNECT_COMPANY_BTN = (By.XPATH, "//div[contains(@class, 'get-free-period') and contains(text(), 'Connect the company')]")
 
-    def __init__(self, driver, timeout=10):
-        super().__init__(driver, timeout)
-
     def go_to_settings(self):
-        sleep(10)
-        self.wait_for_clickable(self.SETTINGS_LINK).click()
+        sleep(5)
+        # self.wait_for_clickable(self.SETTINGS_LINK).click()
+        self.driver.find_element(*self.SETTINGS_LINK).click()
 
     def is_settings_page_open(self):
         return "/settings" in self.get_current_url()
