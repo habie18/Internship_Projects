@@ -1,5 +1,5 @@
 # Created by habeeb at 7/17/2025
- @smoke
+
 Feature: Settings and page validation
 
   Scenario: User can go to settings and see the right number of UI elements
