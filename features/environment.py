@@ -6,6 +6,8 @@ from selenium.webdriver.support.wait import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
 #from webdriver_manager.firefox import GeckoDriverManager
 #from selenium.webdriver.firefox.options import Options
+from selenium.webdriver import Remote
+
 
 from app.application import Application
 from support.logger import logger
@@ -50,26 +52,52 @@ def browser_init(context, scenario_name):
 
     #context.driver = webdriver.Firefox(options=options)
 
-    ### BROWSERSTACK ###
+    ###Mobile emulation Chrome
+    mobile_emulation = {"deviceName": "Pixel 7"}
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_experimental_option("mobileEmulation", mobile_emulation)
+    # run locally
+    context.driver = webdriver.Chrome(options=chrome_options)
 
+    ### BROWSERSTACK ###
 
     bs_user = 'habeebkassim_XKky1W'
     bs_key = 'wJnEA55jyn9dqK2ccu44'
     url = f'http://{bs_user}:{bs_key}@hub-cloud.browserstack.com/wd/hub'
 
-    options = Options()
     bstack_options = {
-         "os" : "Windows",
-         "osVersion" : "11",
-         'browserName': 'Edge',
-         'sessionName': scenario_name,
-     }
+        'deviceName': 'Samsung Galaxy S20 Ultra',
+        'osVersion': '10.0',  # Confirmed supported version for S20 Ultra
+        'realMobile': 'true',
+        'projectName': 'Internship Project',
+        'buildName': 'BDD Mobile Web Tests',
+        'sessionName': 'Test on Samsung S20 Ultra',
+        'debug': True,
+        'networkLogs': True,
+        'interactiveDebugging': True
+    }
+
+    # Setup Chrome mobile browser on Android
+    options = Options()
+    options.set_capability('browserName', 'Chrome')
+    options.set_capability('platformName', 'Android')
     options.set_capability('bstack:options', bstack_options)
+
+    # Initialize WebDriver
     context.driver = webdriver.Remote(command_executor=url, options=options)
 
-    context.driver.maximize_window()
+    # bstack_options = {
+   #      "os" : "Windows",
+   #      "osVersion" : "11",
+   #      'browserName': 'Edge',
+   #      'sessionName': scenario_name,
+   #  }
+   #  options.set_capability('bstack:options', bstack_options)
+   #  context.driver = webdriver.Remote(command_executor=url, options=options)
+
+   # context.driver.maximize_window()
     context.driver.implicitly_wait(4)
-    context.driver.wait = WebDriverWait(context.driver, 30)
+    context.driver.wait = WebDriverWait(context.driver, 15)
     context.app = Application(context.driver)
 
 ###############################################################################
